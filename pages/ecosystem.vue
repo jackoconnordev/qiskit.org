@@ -44,21 +44,28 @@
               {{ tierName }}
             </bx-tab>
           </bx-tabs>
-          <div class="ecosystem__toolbar cds--row">
-            <div class="ecosystem__search cds--col-lg-14 cds--col-md-6">
+          <div class="ecosystem__toolbar cds--row cds--no-gutter">
+            <div class="ecosystem__search cds--col-lg-15 cds--col-md-6">
               <bx-search
                 placeholder="Search using keywords like algorithms, simulator, or machine learning"
                 @bx-search-input="searchOnMembers($event.detail.value)"
               />
             </div>
-            <bx-dropdown
-              class="ecosystem__sort-dropdown cds--col-lg-2 cds--col-md-2"
-              trigger-content="&#x21c5; Sort by ..."
-              @bx-dropdown-selected="setSortValue($event.detail.item.value)"
-            >
-              <bx-dropdown-item value="name">Name</bx-dropdown-item>
-              <bx-dropdown-item value="stars">Stars</bx-dropdown-item>
-            </bx-dropdown>
+            <div class="ecosystem__sort-dropdown cds--col-lg-1 cds--col-md-2">
+              <div
+                class="ecosystem__sort-dropdown__btn"
+                data-floating-menu-container
+              >
+                <bx-overflow-menu open>
+                  <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
+                  <ArrowsVertical16 slot="icon" />
+                  <bx-overflow-menu-body alignment="end" direction="bottom">
+                    <bx-overflow-menu-item>Sort by name</bx-overflow-menu-item>
+                    <bx-overflow-menu-item>Sort by stars</bx-overflow-menu-item>
+                  </bx-overflow-menu-body>
+                </bx-overflow-menu>
+              </div>
+            </div>
           </div>
           <div
             v-for="tierName in tiersNames"
@@ -131,6 +138,7 @@
 import sortBy from "lodash/sortBy";
 import reverse from "lodash/reverse";
 import StarFilled16 from "@carbon/icons-vue/lib/star--filled/16";
+import ArrowsVertical16 from "@carbon/icons-vue/lib/arrows--vertical/16";
 import { Link } from "~/types/links";
 import rawMembers from "~/content/ecosystem/members.json";
 import rawTiers from "~/content/ecosystem/tiers.json";
@@ -272,6 +280,7 @@ const joinAction: Link = {
   }
 
   &__toolbar {
+    padding: 0 carbon.$spacing-05;
     margin-top: carbon.$spacing-06;
   }
 
@@ -284,6 +293,8 @@ const joinAction: Link = {
   }
 
   &__sort-dropdown {
+    position: relative;
+
     --cds-text-01: #{carbon.$cool-gray-60};
   }
 
