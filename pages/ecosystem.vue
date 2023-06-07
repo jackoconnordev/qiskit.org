@@ -44,7 +44,7 @@
                   :target="`panel${tierName}`"
                   :value="`${tierName}`"
                 >
-                  {{ tierName }}
+                  {{ tierName }} ({{ getFilteredResultsCount(tierName) }})
                 </bx-tab>
               </bx-tabs>
             </div>
@@ -305,6 +305,28 @@ function getTestRows(member: Member) {
   }
 
   return [];
+}
+
+function getFilteredResultsCount(tierName: string): number {
+  const filteredMembersByTier = membersByTier[tierName];
+
+  let result = filteredMembersByTier;
+
+  if (searchedText.value !== "") {
+    result = result.filter((member) =>
+      member.description
+        .toLowerCase()
+        .includes(searchedText.value.toLowerCase())
+    );
+  }
+
+  if (labelFilters.value.length > 0) {
+    result = result.filter((member) =>
+      labelFilters.value.every((filter) => member.labels.includes(filter))
+    );
+  }
+
+  return result.length;
 }
 
 function getTierDescription(tierName: string): string {
