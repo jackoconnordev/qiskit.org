@@ -51,9 +51,6 @@
               class="card__custom-pill"
             >
               {{ tag.label }}
-              <bx-tooltip-icon :body-text="tag.description" direction="bottom">
-                <Information16 class="card__tooltip__icon" />
-              </bx-tooltip-icon>
             </div>
           </div>
         </div>
@@ -85,8 +82,6 @@ import { CtaClickedEventProp } from "~/types/segment";
 export interface TagTooltip {
   // the short string label for inside the tag
   label: string;
-  // the description for the tooltip
-  description: string;
 }
 
 interface Props {

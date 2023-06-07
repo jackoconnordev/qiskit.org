@@ -49,6 +49,13 @@
               </bx-tabs>
             </div>
           </div>
+          <div class="cds--row">
+            <div class="cds--col">
+              <div class="ecosystem__tiers__description">
+                {{ selectedTierDescription }}
+              </div>
+            </div>
+          </div>
         </client-only>
       </div>
       <UiFiltersResultsLayout>
@@ -120,7 +127,6 @@
                       :tooltip-tags="[
                         {
                           label: member.tier,
-                          description: getTierDescription(member.tier),
                         },
                       ]"
                       cta-label="Go to repo"
@@ -179,6 +185,7 @@
 <script setup lang="ts">
 import sortBy from "lodash/sortBy";
 import reverse from "lodash/reverse";
+import Information16 from "@carbon/icons-vue/lib/information/16";
 import StarFilled16 from "@carbon/icons-vue/lib/star--filled/16";
 import { Link } from "~/types/links";
 import rawMembers from "~/content/ecosystem/members.json";
@@ -228,6 +235,11 @@ const membersByTier: MembersByTier = tiersNames.reduce((acc, tierName) => {
 const selectTab = (tab: string) => {
   selectedTab.value = tab;
 };
+
+const selectedTierDescription = computed(() => {
+  const tier = tiers.find((tier) => tier.name === selectedTab.value);
+  return tier?.description || "";
+});
 
 const filteredMembers = computed(() => {
   if (!members) {
@@ -370,6 +382,10 @@ const joinAction: Link = {
 .ecosystem {
   &__tiers {
     margin-top: carbon.$spacing-10;
+
+    &__description {
+      padding-top: carbon.$spacing-05;
+    }
   }
 
   &__tier-panel {
@@ -387,14 +403,6 @@ const joinAction: Link = {
 
     &__multiselect {
       margin-top: carbon.$spacing-05;
-    }
-  }
-
-  &__toolbar {
-    margin-top: carbon.$spacing-06;
-
-    @include carbon.breakpoint-down(md) {
-      margin-top: initial;
     }
   }
 
