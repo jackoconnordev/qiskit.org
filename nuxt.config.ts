@@ -3,7 +3,7 @@ import fetchAdvocates from "./hooks/update-advocates";
 import fetchEcosystemMembers from "./hooks/update-ecosystem";
 import pkg from "./package.json";
 
-const { AIRTABLE_API_KEY, GENERATE_CONTENT, NODE_ENV } = process.env;
+const { AIRTABLE_ACCESS_TOKEN, GENERATE_CONTENT, NODE_ENV } = process.env;
 const IS_PRODUCTION = NODE_ENV === "production";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -75,18 +75,18 @@ async function generateContent() {
   console.info("Generating the ecosystem content...");
   await fetchEcosystemMembers("./content/ecosystem");
 
-  if (AIRTABLE_API_KEY) {
+  if (AIRTABLE_ACCESS_TOKEN) {
     // eslint-disable-next-line no-console
     console.info("Generating the events content...");
-    await fetchEvents(AIRTABLE_API_KEY, "./content/events");
+    await fetchEvents(AIRTABLE_ACCESS_TOKEN, "./content/events");
 
     // eslint-disable-next-line no-console
     console.info("Generating the advocates content...");
-    await fetchAdvocates(AIRTABLE_API_KEY, "./content/advocates");
+    await fetchAdvocates(AIRTABLE_ACCESS_TOKEN, "./content/advocates");
   } else {
     // eslint-disable-next-line no-console
     console.warn(
-      "No AIRTABLE_API_KEY environment variable found. Skipping content generation."
+      "No AIRTABLE_ACCESS_TOKEN environment variable found. Skipping content generation."
     );
   }
 }
