@@ -1,7 +1,10 @@
 <template>
   <div class="providers-page">
     <UiPageHeaderFixed>
-      Run Qiskit compiled circuits on
+      Run Qiskit compiled
+      <br />
+      circuits on
+      <br className="show-in-md" />
       <UiTypewriterEffect :values="['real hardware', 'simulators']" />
     </UiPageHeaderFixed>
     <section id="contentContainer" class="cds--grid page-section">
@@ -106,6 +109,7 @@ function asTabs(providers: Array<Provider>): Array<Provider> {
 <style lang="scss" scoped>
 @use "~/assets/scss/carbon.scss";
 @use "~/assets/scss/helpers/index.scss" as qiskit;
+@use "~/assets/scss/helpers/classes";
 
 .providers-page {
   &__table-of-contents {

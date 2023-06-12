@@ -5,7 +5,12 @@
       <UiTypewriterEffect
         :values="['events', 'hackathons', 'camps', 'unconferences', 'talks']"
       />
-      from the world&rsquo;s largest quantum computing community
+      <br className="show-in-md" />
+      from the
+      <br />
+      world&rsquo;s largest quantum
+      <br />
+      computing community
     </UiPageHeaderFixed>
     <div class="cds--grid">
       <div class="event-page__tabs">
@@ -271,6 +276,7 @@ const selectTab = (selectedTab: string) => {
 <style lang="scss" scoped>
 @use "~/assets/scss/carbon.scss";
 @use "~/assets/scss/helpers/index.scss" as qiskit;
+@use "~/assets/scss/helpers/classes";
 
 .event-page {
   &__card {
