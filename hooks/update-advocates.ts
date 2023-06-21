@@ -11,7 +11,7 @@ export default async function (apiKey: any, outputFolder: string) {
     advocates = await advocatesAirtableRecords.fetchAdvocates();
   } else {
     // eslint-disable-next-line no-console
-    console.info("mocking generated data");
+    console.info("mocking advocates data");
     const file = path.join(__dirname, "..", "content", "mock");
     const content = await readJSONFromFile(file);
     advocates = AdvocatesAirtableRecords.fromJSONList(content);

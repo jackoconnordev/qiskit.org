@@ -17,7 +17,7 @@ export default async function (outputFolder: string) {
     tiers = await fetchTiers();
   } else {
     // eslint-disable-next-line no-console
-    console.info("mocking generated data");
+    console.info("mocking ecosystem data");
     const membersPath = path.join(__dirname, "..", "content", "mock", "");
     const membersContent = await readJSONFromFile(membersPath);
     members = membersFromJSONList(membersContent);
