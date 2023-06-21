@@ -7,6 +7,7 @@ import {
 } from "./airtable-conversion-utils";
 // TODO: Understand why this import works with '../' and not with '~/'
 
+
 const RECORD_FIELDS_IDS = Object.freeze({
   name: "fldkG2SqdvCKDUhCH",
   city: "fldoCJjrveX4J9TV1",
@@ -109,6 +110,23 @@ class AdvocatesAirtableRecords extends AirtableRecords {
 
   public getSlackUsername(record: any): string {
     return record.get(this.recordFields!.slackUsername);
+  }
+
+  public static fromJSON(json: any): Advocate {
+    return {
+      city: json.city,
+      country: json.country,
+      image: json.image,
+      location: json.location,
+      name: json.name,
+      region: json.region,
+      slackId: json.slackId,
+      slackUsername: json.slackUsername,
+    };
+  }
+
+  public static fromJSONList(json: any[]): Advocate[] {
+    return json.map(AdvocatesAirtableRecords.fromJSON);
   }
 }
 

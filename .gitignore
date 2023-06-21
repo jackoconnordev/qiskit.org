@@ -22,6 +22,6 @@ static/sw.js
 
 content/events/*.json
 content/ecosystem/members.json
-content/advocates/advocates.jon
+content/advocates/advocates.json
 
 docker-compose.yml

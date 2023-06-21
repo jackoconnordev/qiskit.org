@@ -54,4 +54,40 @@ function toCamelCase(obj: any): any {
   return obj;
 }
 
-export { fetchMembers, fetchTiers };
+function membersFromJSON(json: any): Member {
+  return {
+    name: json.name,
+    url: json.url,
+    website: json.website,
+    description: json.description,
+    licence: json.licence,
+    contactInfo: json.contactInfo,
+    alternatives: json.alternatives,
+    affiliations: json.affiliations,
+    labels: json.labels,
+    createdAt: json.createdAt,
+    updatedAt: json.updatedAt,
+    testsResults: json.testsResults,
+    stylesResults: json.stylesResults,
+    coveragesResults: json.coveragesResults,
+    configuration: json.configuration,
+    historicalTestResults: json.historicalTestResults,
+    tier: json.tier,
+    skipTests: json.skipTests,
+    stars: json.stars,
+  };
+}
+
+function membersFromJSONList(json: any[]): Member[] {
+  return json.map(membersFromJSON);
+}
+
+function tiersFromJSON(json: any): any {
+  return json;
+}
+
+function tiersFromJSONList(json: any[]): any[] {
+  return json.map(tiersFromJSON);
+}
+
+export { fetchMembers, fetchTiers, membersFromJSONList, tiersFromJSONList };

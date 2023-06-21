@@ -1,9 +1,31 @@
-import { fetchMembers, fetchTiers } from "./ecosystem-conversion-utils";
-import { writeJSONToFile } from "./utils/conversion-utils";
+import path from "path";
+import {
+  fetchMembers,
+  fetchTiers,
+  membersFromJSONList,
+  tiersFromJSONList,
+} from "./ecosystem-conversion-utils";
+import { readJSONFromFile, writeJSONToFile } from "./utils/conversion-utils";
+
+const { MOCK_CONTENT } = process.env;
 
 export default async function (outputFolder: string) {
-  const members = await fetchMembers();
-  const tiers = await fetchTiers();
+  let members;
+  let tiers;
+  if (!MOCK_CONTENT) {
+    members = await fetchMembers();
+    tiers = await fetchTiers();
+  } else {
+    // eslint-disable-next-line no-console
+    console.info("mocking generated data");
+    const membersPath = path.join(__dirname, "..", "content", "mock", "");
+    const membersContent = await readJSONFromFile(membersPath);
+    members = membersFromJSONList(membersContent);
+
+    const tiersPath = path.join(__dirname, "..", "content", "mock");
+    const tiersContent = await readJSONFromFile(tiersPath);
+    tiers = tiersFromJSONList(tiersContent);
+  }
 
   await writeJSONToFile(outputFolder, "members.json", members);
   await writeJSONToFile(outputFolder, "tiers.json", tiers);
