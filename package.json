@@ -53,5 +53,8 @@
     "stylelint-config-standard-scss": "^9.0.0",
     "vitest": "^0.31.4",
     "yaml": "^2.3.1"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
   }
 }

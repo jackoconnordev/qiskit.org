@@ -1,4 +1,5 @@
 import path from "path";
+import { parseAdvocate } from "../types/advocates";
 import AdvocatesAirtableRecords from "./advocate-conversion-utils";
 import { writeJSONToFile, readJSONFromFile } from "./utils/conversion-utils";
 
@@ -14,7 +15,7 @@ export default async function (apiKey: any, outputFolder: string) {
     console.info("mocking advocates data");
     const file = path.join(__dirname, "..", "content", "mock");
     const content = await readJSONFromFile(file);
-    advocates = AdvocatesAirtableRecords.fromJSONList(content);
+    advocates = parseAdvocate(content);
   }
 
   await writeJSONToFile(outputFolder, "advocates.json", advocates);

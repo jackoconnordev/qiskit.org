@@ -1,20 +1,18 @@
-const ADVOCATES_WORLD_REGIONS = Object.freeze({
-  northAmerica: "America (North)",
-  southAmerica: "America (South)",
-  oceania: "Oceania",
-  africa: "Africa",
-  europe: "Europe",
-  asia: "Asia",
-} as const);
+import { z } from "zod";
 
-type AdvocatesWorldRegion =
-  (typeof ADVOCATES_WORLD_REGIONS)[keyof typeof ADVOCATES_WORLD_REGIONS];
+export enum AdvocatesWorldRegion {
+  northAmerica = "America (North)",
+  southAmerica = "America (South)",
+  oceania = "Oceania",
+  africa = "Africa",
+  europe = "Europe",
+  asia = "Asia",
+}
 
-const ADVOCATES_WORLD_REGION_OPTIONS = Object.values(
-  ADVOCATES_WORLD_REGIONS
-).sort();
+export const ADVOCATES_WORLD_REGION_OPTIONS =
+  Object.values(AdvocatesWorldRegion).sort();
 
-interface Advocate {
+export interface Advocate {
   city: string;
   country: string[];
   image: string;
@@ -25,4 +23,17 @@ interface Advocate {
   slackUsername?: string;
 }
 
-export { AdvocatesWorldRegion, ADVOCATES_WORLD_REGION_OPTIONS, Advocate };
+const Advocate: z.ZodType<Advocate> = z.object({
+  city: z.string(),
+  country: z.array(z.string()),
+  image: z.string(),
+  location: z.optional(z.string()),
+  name: z.string(),
+  region: z.nativeEnum(AdvocatesWorldRegion),
+  slackId: z.optional(z.string()),
+  slackUsername: z.optional(z.string()),
+});
+
+export function parseAdvocate(data: any): Advocate {
+  return Advocate.parse(data);
+}
