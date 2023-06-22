@@ -2,11 +2,10 @@ import Airtable from "airtable";
 
 import {
   CommunityEvent,
-  CommunityEventType,
-  COMMUNITY_EVENT_TYPES,
+  CommunityEventTypes,
   COMMUNITY_EVENT_TYPE_OPTIONS,
-  type WorldRegion,
-  WORLD_REGIONS,
+  WorldRegions,
+  SeminarSeriesEvent,
 } from "../types/events";
 import {
   AirtableRecords,
@@ -16,19 +15,6 @@ import {
 
 // TODO: Understand why this import worked with '../' and not with '~/'
 // The types has been moved outside the store, check if this works as expected
-
-export type SeminarSeriesEvent = {
-  date: string;
-  startDate: string;
-  endDate: string;
-  startDateAndTime?: string | null;
-  image: string;
-  institution: string;
-  location: string;
-  speaker: string;
-  title: string;
-  to: string;
-};
 
 const RECORD_FIELDS_IDS = Object.freeze({
   name: "fldTqTxKr3ZzUhzKT",
@@ -244,10 +230,9 @@ class EventsAirtableRecords extends AirtableRecords {
     const event = {
       endDate: (record.get(this.recordFields!.endDate) as string) || "",
       location:
-        (record.get(this.recordFields!.location) as string) ||
-        WORLD_REGIONS.tbd,
-      regions: (record.get(this.recordFields!.regions) as WorldRegion[]) || [
-        WORLD_REGIONS.tbd,
+        (record.get(this.recordFields!.location) as string) || WorldRegions.tbd,
+      regions: (record.get(this.recordFields!.regions) as WorldRegions[]) || [
+        WorldRegions.tbd,
       ],
       speaker: (record.get(this.recordFields!.speaker) as string) || "",
       title: (record.get(this.recordFields!.name) as string) || "",
@@ -276,7 +261,7 @@ class EventsAirtableRecords extends AirtableRecords {
     const event = {
       endDate: record.get(this.recordFields!.endDate) || "",
       institution: record.get(this.recordFields!.institution) || "",
-      location: record.get(this.recordFields!.location) || WORLD_REGIONS.tbd,
+      location: record.get(this.recordFields!.location) || WorldRegions.tbd,
       speaker: record.get(this.recordFields!.speaker) || "",
       title: record.get(this.recordFields!.name) || "",
       to: record.get(this.recordFields!.website) || "",
@@ -357,15 +342,15 @@ class EventsAirtableRecords extends AirtableRecords {
    * @param record The event's record.
    * @returns The event's types.
    */
-  private getEventTypes(record: Record<string, any>): CommunityEventType[] {
+  private getEventTypes(record: Record<string, any>): CommunityEventTypes[] {
     const value = record.get(this.recordFields!.types) || [];
     const valueList = (Array.isArray(value) ? value : [value]) as string[];
-    const communityEventTypes = this.filterWithWhitelist(
+    const communityEventTypess = this.filterWithWhitelist(
       valueList,
       COMMUNITY_EVENT_TYPE_OPTIONS
     );
-    const noTypes = communityEventTypes.length === 0;
-    return noTypes ? [COMMUNITY_EVENT_TYPES.talks] : communityEventTypes;
+    const noTypes = communityEventTypess.length === 0;
+    return noTypes ? [CommunityEventTypes.talks] : communityEventTypess;
   }
 
   /**

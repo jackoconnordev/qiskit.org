@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import EventsAirtableRecords from "../../hooks/event-conversion-utils";
-import { COMMUNITY_EVENT_TYPES, WORLD_REGIONS } from "../../types/events";
+import { CommunityEventTypes, WorldRegions } from "../../types/events";
 import type { CommunityEvent } from "../../types/events";
 
 describe("isEventInDateRange", () => {
@@ -18,6 +18,7 @@ describe("isEventInDateRange", () => {
     regions: [],
     date: "",
     to: "",
+    speaker: "",
   };
 
   const getFormattedDate = (daysOffset: number): string => {
@@ -168,8 +169,8 @@ describe("isEventInDateRange", () => {
 describe("convertToCommunityEvent", () => {
   let eventsAirtableRecords: EventsAirtableRecords;
 
-  const { hackathon } = COMMUNITY_EVENT_TYPES;
-  const { europe } = WORLD_REGIONS;
+  const { hackathon } = CommunityEventTypes;
+  const { europe } = WorldRegions;
 
   const fakeRecord = {
     get: (field: string) => {
@@ -211,8 +212,8 @@ describe("convertToCommunityEvent", () => {
   });
 
   test("extracts and format information from the record", async () => {
-    const { hackathon } = COMMUNITY_EVENT_TYPES;
-    const { europe } = WORLD_REGIONS;
+    const { hackathon } = CommunityEventTypes;
+    const { europe } = WorldRegions;
     const { title, types, location, regions, date, to } =
       await eventsAirtableRecords.convertToCommunityEvent(fakeRecord);
 
@@ -247,7 +248,7 @@ describe("convertToCommunityEvent types", () => {
       get: (field: string) => {
         switch (field) {
           case "Types":
-            return [COMMUNITY_EVENT_TYPES.hackathon, "Unknown1", "Unknown2"];
+            return [CommunityEventTypes.hackathon, "Unknown1", "Unknown2"];
         }
       },
     };
@@ -257,7 +258,7 @@ describe("convertToCommunityEvent types", () => {
     );
 
     expect({ types }).toEqual({
-      types: [COMMUNITY_EVENT_TYPES.hackathon],
+      types: [CommunityEventTypes.hackathon],
     });
   });
 
@@ -276,7 +277,7 @@ describe("convertToCommunityEvent types", () => {
     );
 
     expect({ types }).toEqual({
-      types: [COMMUNITY_EVENT_TYPES.talks],
+      types: [CommunityEventTypes.talks],
     });
   });
 
@@ -295,7 +296,7 @@ describe("convertToCommunityEvent types", () => {
     );
 
     expect({ types }).toEqual({
-      types: [COMMUNITY_EVENT_TYPES.talks],
+      types: [CommunityEventTypes.talks],
     });
   });
 
@@ -304,7 +305,7 @@ describe("convertToCommunityEvent types", () => {
       get: (field: string) => {
         switch (field) {
           case "Types":
-            return [COMMUNITY_EVENT_TYPES.hackathon];
+            return [CommunityEventTypes.hackathon];
         }
       },
     };
@@ -314,7 +315,7 @@ describe("convertToCommunityEvent types", () => {
     );
 
     expect({ types }).toEqual({
-      types: [COMMUNITY_EVENT_TYPES.hackathon],
+      types: [CommunityEventTypes.hackathon],
     });
   });
 });
@@ -362,7 +363,7 @@ describe("convertToCommunityEvent regions", () => {
     );
 
     expect({ regions }).toEqual({
-      regions: [WORLD_REGIONS.tbd],
+      regions: [WorldRegions.tbd],
     });
   });
 
@@ -371,7 +372,7 @@ describe("convertToCommunityEvent regions", () => {
       get: (field: string) => {
         switch (field) {
           case "Regions":
-            return [WORLD_REGIONS.northAmerica];
+            return [WorldRegions.northAmerica];
         }
       },
     };
@@ -381,7 +382,7 @@ describe("convertToCommunityEvent regions", () => {
     );
 
     expect({ regions }).toEqual({
-      regions: [WORLD_REGIONS.northAmerica],
+      regions: [WorldRegions.northAmerica],
     });
   });
 
@@ -435,7 +436,7 @@ describe("convertToCommunityEvent location", () => {
     );
 
     expect({ location }).toEqual({
-      location: WORLD_REGIONS.tbd,
+      location: WorldRegions.tbd,
     });
   });
 

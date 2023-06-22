@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "set MOCK_CONTENT=1 && nuxt dev",
     "format": "npm run format:eslint && npm run format:prettier && npm run format:stylelint",
     "format:eslint": "npm run lint:eslint -- --fix",
     "format:prettier": "prettier . --ignore-path .gitignore --write",

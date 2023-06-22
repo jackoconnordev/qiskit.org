@@ -7,7 +7,6 @@ import {
 } from "./airtable-conversion-utils";
 // TODO: Understand why this import works with '../' and not with '~/'
 
-
 const RECORD_FIELDS_IDS = Object.freeze({
   name: "fldkG2SqdvCKDUhCH",
   city: "fldoCJjrveX4J9TV1",
@@ -96,7 +95,7 @@ class AdvocatesAirtableRecords extends AirtableRecords {
     return record.get(this.recordFields!.city);
   }
 
-  public getCountry(record: any): string {
+  public getCountry(record: any): string[] {
     return record.get(this.recordFields!.country);
   }
 

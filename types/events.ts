@@ -1,40 +1,35 @@
-const WORLD_REGIONS = Object.freeze({
-  northAmerica: "North America",
-  southAmerica: "South America",
-  asiaPacific: "Asia Pacific",
-  europe: "Europe",
-  africa: "Africa",
-  online: "Online",
-  tbd: "TBD",
-} as const);
-
-type WorldRegion = (typeof WORLD_REGIONS)[keyof typeof WORLD_REGIONS];
+enum WorldRegions {
+  northAmerica = "North America",
+  southAmerica = "South America",
+  asiaPacific = "Asia Pacific",
+  europe = "Europe",
+  africa = "Africa",
+  online = "Online",
+  tbd = "TBD",
+}
 
 const WORLD_REGION_OPTIONS = [
-  WORLD_REGIONS.northAmerica,
-  WORLD_REGIONS.southAmerica,
-  WORLD_REGIONS.asiaPacific,
-  WORLD_REGIONS.europe,
-  WORLD_REGIONS.africa,
-  WORLD_REGIONS.online,
+  WorldRegions.northAmerica,
+  WorldRegions.southAmerica,
+  WorldRegions.asiaPacific,
+  WorldRegions.europe,
+  WorldRegions.africa,
+  WorldRegions.online,
 ];
 
-const COMMUNITY_EVENT_TYPES = Object.freeze({
-  hackathon: "Hackathon",
-  camp: "Camp",
-  industryEvent: "Industry Event",
-  openSource: "Open Source",
-  workshop: "Workshop",
-  challenge: "Challenge",
-  networking: "Networking",
-  talks: "Talks",
-} as const);
-
-type CommunityEventType =
-  (typeof COMMUNITY_EVENT_TYPES)[keyof typeof COMMUNITY_EVENT_TYPES];
+enum CommunityEventTypes {
+  hackathon = "Hackathon",
+  camp = "Camp",
+  industryEvent = "Industry Event",
+  openSource = "Open Source",
+  workshop = "Workshop",
+  challenge = "Challenge",
+  networking = "Networking",
+  talks = "Talks",
+}
 
 type CommunityEvent = {
-  types: CommunityEventType[];
+  types: CommunityEventTypes[];
   title: string;
   image: string;
   // TODO: We need to clarify if region and place have default values and what
@@ -45,7 +40,7 @@ type CommunityEvent = {
   // https://github.com/Qiskit/qiskit.org/issues/527
   location: string;
   speaker: string;
-  regions: WorldRegion[];
+  regions: WorldRegions[];
   date: string;
   startDate: string;
   startDateAndTime: string | null;
@@ -54,16 +49,26 @@ type CommunityEvent = {
   abstract?: string;
 };
 
-const COMMUNITY_EVENT_TYPE_OPTIONS = Object.values(
-  COMMUNITY_EVENT_TYPES
-).sort();
+const COMMUNITY_EVENT_TYPE_OPTIONS = Object.values(CommunityEventTypes).sort();
+
+type SeminarSeriesEvent = {
+  date: string;
+  startDate: string;
+  endDate: string;
+  startDateAndTime?: string | null;
+  image: string;
+  institution: string;
+  location: string;
+  speaker: string;
+  title: string;
+  to: string;
+};
 
 export {
-  WorldRegion,
-  WORLD_REGIONS,
+  WorldRegions,
   WORLD_REGION_OPTIONS,
   CommunityEvent,
-  CommunityEventType,
-  COMMUNITY_EVENT_TYPES,
+  CommunityEventTypes,
   COMMUNITY_EVENT_TYPE_OPTIONS,
+  SeminarSeriesEvent,
 };

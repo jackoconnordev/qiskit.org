@@ -1,6 +1,11 @@
-import path from "path";
 import EventsAirtableRecords from "./event-conversion-utils";
-import { writeJSONToFile, readJSONFromFile } from "./utils/conversion-utils";
+import { writeJSONToFile } from "./utils/conversion-utils";
+import {
+  fetchPastCommunityEventsMock,
+  fetchPastSeminarSeriesEventsMock,
+  fetchUpcommingCommunityEventsMock,
+  fetchUpcommingSeminarSeriesEventsMock,
+} from "./mock-services/events-mock-service";
 
 const { MOCK_CONTENT } = process.env;
 
@@ -12,7 +17,7 @@ export default async function (apiKey: string, outputFolder: string) {
   let upcomingSeminarSeriesEvents;
   let pastSeminarSeriesEvents;
 
-  if (MOCK_CONTENT) {
+  if (!MOCK_CONTENT) {
     communityEventsAirtableRecords = new EventsAirtableRecords(
       apiKey,
       "Add to Event Site"
@@ -31,18 +36,10 @@ export default async function (apiKey: string, outputFolder: string) {
     pastSeminarSeriesEvents =
       await seminarSeriesEventsAirtableRecords.fetchSeminarSeriesEvents(-62);
   } else {
-    upcomingCommunityEvents = readJSONFromFile(
-      path.join(__dirname, "..", "content", "mock", "events", "upcoming-community-events.json")
-    );
-    pastCommunityEvents = readJSONFromFile(
-      path.join(__dirname, "..", "content", "mock", "past-community-events.json")
-    );
-    upcomingSeminarSeriesEvents = readJSONFromFile(
-      path.join(__dirname, "..", "content", "mock", "upcoming-seminar-series-events.json")
-    );
-    pastSeminarSeriesEvents = readJSONFromFile(
-      path.join(__dirname, "..", "content", "mock", "past-seminar-series-events.json")
-    );
+    upcomingCommunityEvents = await fetchUpcommingCommunityEventsMock();
+    pastCommunityEvents = await fetchPastCommunityEventsMock();
+    upcomingSeminarSeriesEvents = await fetchUpcommingSeminarSeriesEventsMock();
+    pastSeminarSeriesEvents = await fetchPastSeminarSeriesEventsMock();
   }
 
   const eventsAndOutputFilename = [

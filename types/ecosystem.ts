@@ -1,30 +1,30 @@
-interface TestResult {
+export interface TestResult {
   testType: "development" | "last passing version" | "stable" | "standard";
   passed: boolean;
   package: string;
   packageVersion: string;
   terraVersion: string;
   timestamp: number;
-  logsLink: string;
-  packageCommitHash: string;
+  logsLink: string | null;
+  packageCommitHash: string | null;
 }
 
-type StylesResults = {
+export type StylesResults = {
   styleType: string;
   passed: boolean;
 };
 
-type CoveragesResults = {
+export type CoveragesResults = {
   coverageType: string;
   passed: boolean;
 };
 
-type ProjectLanguage = {
+export type ProjectLanguage = {
   name: string;
   versions: string[];
 };
 
-type ProjectConfig = {
+export type ProjectConfig = {
   language: ProjectLanguage;
   dependenciesFiles: string[];
   extraDependencies: string[];
@@ -33,7 +33,7 @@ type ProjectConfig = {
   coveragesCheckCommand: string[];
 };
 
-interface Member {
+export interface Member {
   name: string;
   url: string;
   website?: string;
@@ -55,9 +55,7 @@ interface Member {
   stars: number;
 }
 
-interface Tier {
+export interface Tier {
   name: string;
   description: string;
 }
-
-export { Member, Tier };

@@ -1,7 +1,6 @@
-import path from "path";
-import { parseAdvocate } from "../types/advocates";
 import AdvocatesAirtableRecords from "./advocate-conversion-utils";
-import { writeJSONToFile, readJSONFromFile } from "./utils/conversion-utils";
+import { writeJSONToFile } from "./utils/conversion-utils";
+import { fetchAdvocatesMock } from "./mock-services/advocates-mock-service";
 
 const { MOCK_CONTENT } = process.env;
 
@@ -13,9 +12,7 @@ export default async function (apiKey: any, outputFolder: string) {
   } else {
     // eslint-disable-next-line no-console
     console.info("mocking advocates data");
-    const file = path.join(__dirname, "..", "content", "mock");
-    const content = await readJSONFromFile(file);
-    advocates = parseAdvocate(content);
+    advocates = await fetchAdvocatesMock();
   }
 
   await writeJSONToFile(outputFolder, "advocates.json", advocates);
